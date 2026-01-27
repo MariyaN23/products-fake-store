@@ -13,7 +13,7 @@ export const ProductCard = ({product}: Props) => {
     return (
         <a
             href={'/'}
-            className={'flex flex-col gap-3 p-3 bg-white dark:bg-gray-900! rounded-xl'}
+            className={'flex flex-col gap-3 p-3 bg-gray-200 dark:bg-gray-900 rounded-xl'}
         >
             <div className={'relative flex justify-center items-center w-48 h-48'}>
                 <Image
@@ -25,8 +25,8 @@ export const ProductCard = ({product}: Props) => {
                     className={'w-full h-full object-contain'}
                 />
                 <div className={'absolute bottom-1 left-1'}>
-                    <div className={'rounded-sm px-2 bg-red-100 text-red-700 text-sm'}>
-                        Out of stock
+                    <div className={'rounded-sm px-2 bg-green-100 text-green-700 text-sm'}>
+                        In stock
                     </div>
                 </div>
             </div>

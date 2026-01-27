@@ -6,8 +6,10 @@ import {useProducts} from "@/hooks/useProducts";
 
 const sortingVariants = [
     {key: 'default', label: 'Featured'},
-    {key: 'asc', label: 'Price: low to high'},
-    {key: 'desc', label: 'Price: high to low'},
+    {key: 'asc-price', label: 'Price: low to high'},
+    {key: 'desc-price', label: 'Price: high to low'},
+    {key: 'asc-title', label: 'Title: A to Z'},
+    {key: 'desc-title', label: 'Title: Z to A'},
 ]
 
 export const SortSelect = () => {
@@ -27,6 +29,7 @@ export const SortSelect = () => {
             selectedKeys={[sorting]}
             onChange={handleSelectionChange}
             size={'sm'}
+            label={'Sort by'}
         >
             {sortingVariants.map(item => (
                 <SelectItem key={item.key}>

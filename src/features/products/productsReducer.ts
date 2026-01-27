@@ -14,6 +14,8 @@ type InitialState = {
         currentPage: number
         itemsPerPage: number
     }
+    categories: string[]
+    filterCategories: string[]
 }
 
 const initialState: InitialState = {
@@ -26,14 +28,32 @@ const initialState: InitialState = {
         currentPage: 1,
         itemsPerPage: 12,
     },
+    categories: [],
+    filterCategories: [],
+}
+
+const getUniqueCategories = (products: Product[]): string[] => {
+    const categoriesSet = new Set<string>()
+    products.forEach(product => categoriesSet.add(product.category))
+    return Array.from(categoriesSet).sort()
+}
+
+const applyCategories = (products: Product[], categories: string[]): Product[] => {
+    if (categories.length === 0) return products
+
+    return products.filter(product => categories.includes(product.category))
 }
 
 const applySorting = (products: Product[], sorting: Sort): Product[] => {
     switch (sorting) {
-        case 'asc':
+        case 'asc-price':
             return products.toSorted((a, b) => a.price - b.price)
-        case 'desc':
+        case 'desc-price':
             return products.toSorted((a, b) => b.price - a.price)
+        case 'asc-title':
+            return products.toSorted((a, b) => a.title.localeCompare(b.title))
+        case 'desc-title':
+            return products.toSorted((a, b) => b.title.localeCompare(a.title))
         default:
             return [...products]
     }
@@ -48,7 +68,14 @@ export const slice = createSlice({
         },
         setSortingValue: (state, action: PayloadAction<Sort>) => {
             state.sorting = action.payload
-            state.filteredItems = applySorting(state.items, action.payload)
+            const filtered = applyCategories(state.items, state.filterCategories)
+            state.filteredItems = applySorting(filtered, action.payload)
+            state.pagination.currentPage = 1
+        },
+        setSelectedCategories: (state, action: PayloadAction<string[]>) => {
+            state.filterCategories = action.payload
+            const filtered = applyCategories(state.items, action.payload)
+            state.filteredItems = applySorting(filtered, state.sorting)
             state.pagination.currentPage = 1
         },
     },
@@ -62,6 +89,8 @@ export const slice = createSlice({
                 state.status = 'succeeded'
                 state.items = action.payload.products
                 state.filteredItems = action.payload.products
+                state.categories = getUniqueCategories(action.payload.products)
+                state.filterCategories = []
                 state.pagination.currentPage = 1
             })
             .addCase(fetchProducts.rejected, (state, action) => {
@@ -74,4 +103,5 @@ export const slice = createSlice({
 export const {
     setCurrentPage,
     setSortingValue,
+    setSelectedCategories,
 } = slice.actions

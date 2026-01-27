@@ -4,7 +4,7 @@ import { productsSelectors } from "@/features/products";
 import { AppDispatch } from "@/lib/types/App";
 import { fetchProducts } from "@/features/products/productsActions";
 import { useEffect } from "react";
-import { setCurrentPage, setSortingValue } from "@/features/products/productsReducer";
+import { setCurrentPage, setSelectedCategories, setSortingValue } from "@/features/products/productsReducer";
 import { Sort } from "@/lib/types/Sort";
 
 export function useProducts() {
@@ -15,6 +15,8 @@ export function useProducts() {
     const currentPage = useSelector(productsSelectors.selectCurrentPage)
     const totalPages = useSelector(productsSelectors.selectTotalPages)
     const sorting = useSelector(productsSelectors.selectSorting)
+    const categories = useSelector(productsSelectors.selectCategories)
+    const filterCategories = useSelector(productsSelectors.selectFilterCategories)
 
     useEffect(() => {
         dispatch(fetchProducts())
@@ -28,6 +30,14 @@ export function useProducts() {
         dispatch(setSortingValue(value))
     }
 
+    const onCategoriesChange = (updatedCategories: string[]) => {
+        dispatch(setSelectedCategories(updatedCategories))
+    }
+
+    const onClearCategories = () => {
+        dispatch(setSelectedCategories([]))
+    }
+
     return {
         products,
         status,
@@ -35,7 +45,11 @@ export function useProducts() {
         currentPage,
         totalPages,
         sorting,
+        categories,
+        filterCategories,
         onPageChange,
         onSortChange,
+        onCategoriesChange,
+        onClearCategories,
     }
 }
