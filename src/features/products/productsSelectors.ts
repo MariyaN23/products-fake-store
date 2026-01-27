@@ -9,6 +9,7 @@ export const selectCurrentPage = (state: AppRootState) => state.products.paginat
 export const selectSorting = (state: AppRootState) => state.products.sorting
 export const selectCategories = (state: AppRootState) => state.products.categories
 export const selectFilterCategories = (state: AppRootState) => state.products.filterCategories
+export const selectSearchQuery = (state: AppRootState) => state.products.searchQuery
 
 export const selectPaginatedProducts = createSelector(
     [selectFilteredItems, selectCurrentPage, selectItemsPerPage],

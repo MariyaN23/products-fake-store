@@ -16,6 +16,7 @@ type InitialState = {
     }
     categories: string[]
     filterCategories: string[]
+    searchQuery: string
 }
 
 const initialState: InitialState = {
@@ -30,6 +31,7 @@ const initialState: InitialState = {
     },
     categories: [],
     filterCategories: [],
+    searchQuery: '',
 }
 
 const getUniqueCategories = (products: Product[]): string[] => {
@@ -38,24 +40,38 @@ const getUniqueCategories = (products: Product[]): string[] => {
     return Array.from(categoriesSet).sort()
 }
 
-const applyCategories = (products: Product[], categories: string[]): Product[] => {
-    if (categories.length === 0) return products
+const applyAllFilters = (
+    products: Product[],
+    searchQuery: string,
+    categories: string[],
+    sorting: Sort
+): Product[] => {
+    let filtered = [...products]
 
-    return products.filter(product => categories.includes(product.category))
-}
+    if (searchQuery.trim()) {
+        const query = searchQuery.toLowerCase().trim()
+        filtered = filtered.filter(product =>
+            product.title.toLowerCase().includes(query)
+        )
+    }
 
-const applySorting = (products: Product[], sorting: Sort): Product[] => {
+    if (categories.length > 0) {
+        filtered = filtered.filter(product =>
+            categories.includes(product.category)
+        )
+    }
+
     switch (sorting) {
         case 'asc-price':
-            return products.toSorted((a, b) => a.price - b.price)
+            return filtered.sort((a, b) => a.price - b.price)
         case 'desc-price':
-            return products.toSorted((a, b) => b.price - a.price)
+            return filtered.sort((a, b) => b.price - a.price)
         case 'asc-title':
-            return products.toSorted((a, b) => a.title.localeCompare(b.title))
+            return filtered.sort((a, b) => a.title.localeCompare(b.title))
         case 'desc-title':
-            return products.toSorted((a, b) => b.title.localeCompare(a.title))
+            return filtered.sort((a, b) => b.title.localeCompare(a.title))
         default:
-            return [...products]
+            return filtered
     }
 }
 
@@ -68,14 +84,32 @@ export const slice = createSlice({
         },
         setSortingValue: (state, action: PayloadAction<Sort>) => {
             state.sorting = action.payload
-            const filtered = applyCategories(state.items, state.filterCategories)
-            state.filteredItems = applySorting(filtered, action.payload)
+            state.filteredItems = applyAllFilters(
+                state.items,
+                state.searchQuery,
+                state.filterCategories,
+                action.payload
+            )
             state.pagination.currentPage = 1
         },
         setSelectedCategories: (state, action: PayloadAction<string[]>) => {
             state.filterCategories = action.payload
-            const filtered = applyCategories(state.items, action.payload)
-            state.filteredItems = applySorting(filtered, state.sorting)
+            state.filteredItems = applyAllFilters(
+                state.items,
+                state.searchQuery,
+                action.payload,
+                state.sorting
+            )
+            state.pagination.currentPage = 1
+        },
+        setSearchQuery: (state, action: PayloadAction<string>) => {
+            state.searchQuery = action.payload
+            state.filteredItems = applyAllFilters(
+                state.items,
+                action.payload,
+                state.filterCategories,
+                state.sorting
+            )
             state.pagination.currentPage = 1
         },
     },
@@ -104,4 +138,5 @@ export const {
     setCurrentPage,
     setSortingValue,
     setSelectedCategories,
+    setSearchQuery,
 } = slice.actions

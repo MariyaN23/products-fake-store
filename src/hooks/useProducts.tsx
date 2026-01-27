@@ -4,7 +4,12 @@ import { productsSelectors } from "@/features/products";
 import { AppDispatch } from "@/lib/types/App";
 import { fetchProducts } from "@/features/products/productsActions";
 import { useEffect } from "react";
-import { setCurrentPage, setSelectedCategories, setSortingValue } from "@/features/products/productsReducer";
+import {
+    setCurrentPage,
+    setSearchQuery,
+    setSelectedCategories,
+    setSortingValue
+} from "@/features/products/productsReducer";
 import { Sort } from "@/lib/types/Sort";
 
 export function useProducts() {
@@ -17,6 +22,7 @@ export function useProducts() {
     const sorting = useSelector(productsSelectors.selectSorting)
     const categories = useSelector(productsSelectors.selectCategories)
     const filterCategories = useSelector(productsSelectors.selectFilterCategories)
+    const searchQuery = useSelector(productsSelectors.selectSearchQuery)
 
     useEffect(() => {
         dispatch(fetchProducts())
@@ -38,6 +44,10 @@ export function useProducts() {
         dispatch(setSelectedCategories([]))
     }
 
+    const onSearchChange = (value: string) => {
+        dispatch(setSearchQuery(value))
+    }
+
     return {
         products,
         status,
@@ -47,9 +57,11 @@ export function useProducts() {
         sorting,
         categories,
         filterCategories,
+        searchQuery,
         onPageChange,
         onSortChange,
         onCategoriesChange,
         onClearCategories,
+        onSearchChange,
     }
 }
