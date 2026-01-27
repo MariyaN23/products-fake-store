@@ -13,7 +13,7 @@ export const Filters = () => {
 
     if (status === 'succeeded') {
         return (
-            <div className={'bg-white dark:bg-gray-900 rounded-xl h-fit'}>
+            <div className={'bg-gray-200 dark:bg-gray-900 rounded-xl h-fit'}>
                 <Accordion
                     selectionMode={'multiple'}
                     defaultSelectedKeys={'all'}
@@ -41,11 +41,13 @@ export const Filters = () => {
                         </CheckboxGroup>
                     </AccordionItem>
                 </Accordion>
-                <div className={'sticky bg-white dark:bg-gray-900 rounded-b-xl bottom-0 p-2'}>
+                <div className={'sticky bg-gray-200 dark:bg-gray-900 rounded-b-xl bottom-0 p-2'}>
                     <Button
                         type={'reset'}
                         onPress={onClearCategories}
                         className={'w-full'}
+                        color={'primary'}
+                        variant={'flat'}
                     >
                         Reset all
                     </Button>

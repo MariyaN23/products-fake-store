@@ -13,7 +13,7 @@ export const ProductCard = ({product}: Props) => {
     return (
         <a
             href={'/'}
-            className={'flex flex-col gap-3 p-3 bg-gray-200 dark:bg-gray-900 rounded-xl'}
+            className={'flex flex-col items-center gap-3 p-3 bg-gray-200 dark:bg-gray-900 rounded-xl'}
         >
             <div className={'relative flex justify-center items-center w-48 h-48'}>
                 <Image
@@ -41,7 +41,11 @@ export const ProductCard = ({product}: Props) => {
                     {displayedDescription}...
                 </p>
             </div>
-            <Button size={'sm'} color={'primary'}>
+            <Button
+                fullWidth
+                size={'sm'} 
+                color={'primary'}
+            >
                 Add to cart
             </Button>
         </a>

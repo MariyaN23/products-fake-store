@@ -26,14 +26,14 @@ export const ProductsSearchResults = () => {
 
     if (status === 'succeeded') {
         return (
-            <div className={'grid grid-cols-4 gap-4'}>
+            <div className={'grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'}>
                 {products.length ? products.map(product => (
                     <ProductCard
                         key={product.id}
                         product={product}
                     />
                 )) : (
-                    <div className={'col-span-4 flex flex-col items-center text-center'}>
+                    <div className={'xl:col-span-4 flex flex-col items-center text-center'}>
                         <h2 className={'text-lg font-semibold'}>
                             Nothing was found
                         </h2>

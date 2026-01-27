@@ -31,7 +31,7 @@ export default function RootLayout({
         >
         <Providers>
             <Header />
-            <div className={'mx-auto max-w-7xl py-16 px-4 min-h-screen'}>
+            <div className={'mx-auto max-w-7xl py-4 px-4 min-h-screen'}>
                 {children}
             </div>
         </Providers>

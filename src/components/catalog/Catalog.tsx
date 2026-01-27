@@ -11,7 +11,7 @@ export const Catalog = () => {
                 <ProductsSearch />
                 <SortSelect />
             </div>
-            <div className={'grid grid-cols-[270px_1fr] gap-4'}>
+            <div className={'grid xl:grid-cols-[1fr_4fr] gap-4'}>
                 <Filters />
                 <div>
                     <ProductsSearchResults />
