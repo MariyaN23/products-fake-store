@@ -1,26 +1,31 @@
-import { CartItem } from "@/lib/types/CartItem";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {CartItem} from "@/lib/types/CartItem";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 type InitialState = {
     items: CartItem[]
-    totalQuantity: number
     totalPrice: number
+}
+
+const saveStateToLocalStorage = (state: InitialState) => {
+    localStorage.setItem('cart', JSON.stringify(state))
 }
 
 const loadStateFromLocalStorage = (): InitialState => {
     const initialState = {
         items: [],
-        totalQuantity: 0,
         totalPrice: 0,
     }
-    if (typeof window === 'undefined') return initialState
 
     const state = localStorage.getItem('cart')
     if (!state) {
-        localStorage.setItem('cart', JSON.stringify(initialState))
+        saveStateToLocalStorage(initialState)
         return initialState
     }
     return JSON.parse(state)
+}
+
+const calculateTotalPrice = (items: CartItem[]): number => {
+    return items.reduce((total, item) => total + (item.price * item.quantity), 0)
 }
 
 const initialState = loadStateFromLocalStorage()
@@ -30,38 +35,46 @@ export const slice = createSlice({
     initialState,
     reducers: {
         addItem: (state, action: PayloadAction<CartItem>) => {
-            const existingItem = state.items.find(item => item.id === action.payload.id)
+            const newItem = action.payload
+            const existingItem = state.items.find(item => item.id === newItem.id)
+
             if (existingItem) {
-                existingItem.quantity += action.payload.quantity
+                existingItem.quantity += newItem.quantity
             } else {
-                state.items.push(action.payload)
+                state.items.push(newItem)
             }
-            state.totalQuantity += action.payload.quantity
-            state.totalPrice = parseFloat((state.totalPrice + action.payload.price * action.payload.quantity).toFixed(2))
-            localStorage.setItem('cart', JSON.stringify(state))
+            state.totalPrice = calculateTotalPrice(state.items)
+            saveStateToLocalStorage(state)
         },
         removeItem: (state, action: PayloadAction<number>) => {
-            const index = state.items.findIndex(item => item.id === action.payload)
-            if (index !== -1) {
-                const item = state.items[index]
-                state.totalQuantity -= item.quantity
-                state.totalPrice = parseFloat((state.totalPrice - item.price * item.quantity).toFixed(2))
-                state.items.splice(index, 1)
-                localStorage.setItem('cart', JSON.stringify(state))
+            const itemId = action.payload
+            state.items = state.items.filter(item => item.id !== itemId)
+            state.totalPrice = calculateTotalPrice(state.items)
+            saveStateToLocalStorage(state)
+        },
+        increaseQuantity: (state, action: PayloadAction<number>) => {
+            const itemId = action.payload
+            const item = state.items.find(item => item.id === itemId)
+            if (item) {
+                item.quantity += 1
+                state.totalPrice = calculateTotalPrice(state.items)
+                saveStateToLocalStorage(state)
             }
         },
-        updateQuantity: (state, action: PayloadAction<{id: number, quantity: number}>) => {
-            const item = state.items.find(item => item.id === action.payload.id)
-            if (item) {
-                const quantityDiff = action.payload.quantity - item.quantity
-                state.totalPrice = parseFloat((state.totalPrice + quantityDiff * item.price).toFixed(2))
-                state.totalPrice += quantityDiff * item.price
-                item.quantity = action.payload.quantity
-                if (item.quantity <= 0) {
-                    state.items = state.items.filter(i => i.id !== action.payload.id)
+        decreaseQuantity: (state, action: PayloadAction<number>) => {
+            const itemId = action.payload
+            const itemIndex = state.items.findIndex(item => item.id === itemId)
+
+            if (itemIndex !== -1) {
+                const item = state.items[itemIndex]
+                if (item.quantity > 1) {
+                    item.quantity -= 1
+                } else {
+                    state.items.splice(itemIndex, 1)
                 }
+                state.totalPrice = calculateTotalPrice(state.items)
+                saveStateToLocalStorage(state)
             }
-            localStorage.setItem('cart', JSON.stringify(state))
         },
     },
 })
@@ -69,5 +82,6 @@ export const slice = createSlice({
 export const {
     addItem,
     removeItem,
-    updateQuantity,
+    increaseQuantity,
+    decreaseQuantity,
 } = slice.actions

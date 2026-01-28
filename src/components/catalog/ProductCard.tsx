@@ -1,36 +1,36 @@
-import { Product } from "@/lib/types/Product";
-import { Button } from "@heroui/react";
+import {Product} from "@/lib/types/Product";
+import {Button} from "@heroui/react";
 import Image from "next/image";
-import { formattedPrice } from "@/helpers/formattedPrice";
-import { CartItem } from "@/lib/types/CartItem";
+import {formattedPrice} from "@/helpers/formattedPrice";
+import {IncreaseDecreaseButtons} from "@/components/ui/IncreaseDecreaseButtons";
+import {useCart} from "@/hooks/useCart";
 
 type Props = {
     product: Product
-    addToCart: (item: CartItem) => void
-    updateItemQuantity: (id: number, quantity: number) => void
-    getItemQuantity: (id: number) => number
 }
 
-export const ProductCard = ({
-                                product,
-                                addToCart,
-                                updateItemQuantity,
-                                getItemQuantity,
-                            }: Props) => {
-    const displayedDescription = product.description.slice(0, 50)
+export const ProductCard = ({product}: Props) => {
+    const {
+        addToCart,
+        increaseItemQuantity,
+        decreaseItemQuantity,
+        getItemQuantity,
+    } = useCart()
+
     const quantity = getItemQuantity(product.id)
+    const displayedDescription = product.description.slice(0, 50)
     const handleAddToCart = () => {
         addToCart({
             ...product,
-            quantity: 1
+            quantity: 1,
         })
     }
 
     const handleIncrementCount = () => {
-        updateItemQuantity(product.id, quantity + 1)
+        increaseItemQuantity(product.id)
     }
     const handleDecrementCount = () => {
-        updateItemQuantity(product.id, Math.max(0, quantity - 1))
+        decreaseItemQuantity(product.id)
     }
 
     return (
@@ -71,17 +71,13 @@ export const ProductCard = ({
                     Add to cart
                 </Button>
                 {quantity > 0 && (
-                    <div className={'flex gap-2'}>
-                        <button onClick={handleDecrementCount}>
-                            -
-                        </button>
-                        <div>
-                            {quantity}
-                        </div>
-                        <button onClick={handleIncrementCount}>
-                            +
-                        </button>
-                    </div>
+                    <IncreaseDecreaseButtons
+                        actions={{
+                            increase: handleIncrementCount,
+                            decrease: handleDecrementCount,
+                        }}
+                        count={quantity}
+                    />
                 )}
             </div>
         </div>

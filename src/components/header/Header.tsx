@@ -1,6 +1,6 @@
 import { ThemeSwitcher } from "@/components/ui/ThemeSwitcher";
-import { CartButton } from "@/components/cart/CartButton";
-import { CatalogButton } from "@/components/catalog/CatalogButton";
+import { CartButton } from "@/components/header/CartButton";
+import { CatalogButton } from "@/components/header/CatalogButton";
 
 export const Header = () => {
     return (

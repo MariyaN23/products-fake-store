@@ -2,35 +2,47 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/lib/types/App";
 import { cartSelectors } from "@/features/cart";
-import { addItem, removeItem, updateQuantity } from "@/features/cart/cartReducer";
+import {addItem, decreaseQuantity, increaseQuantity, removeItem} from "@/features/cart/cartReducer";
 import { CartItem } from "@/lib/types/CartItem";
+import {useEffect} from "react";
 
 export function useCart() {
     const dispatch = useDispatch<AppDispatch>()
     const items = useSelector(cartSelectors.selectItems)
+    const totalPrice = useSelector(cartSelectors.selectTotalPrice)
 
     const addToCart = (item: CartItem) => {
         dispatch(addItem(item))
-    }
-
-    const updateItemQuantity = (id: number, quantity: number) => {
-        dispatch(updateQuantity({ id, quantity }))
     }
 
     const removeItemFromCart = (id: number) => {
         dispatch(removeItem(id))
     }
 
-    const getItemQuantity = (productId: number): number => {
-        const item = items.find(item => item.id === productId)
+    const increaseItemQuantity = (id: number) => {
+        dispatch(increaseQuantity(id))
+    }
+
+    const decreaseItemQuantity = (id: number) => {
+        dispatch(decreaseQuantity(id))
+    }
+
+    const getItemQuantity = (id: number): number => {
+        const item = items.find(item => item.id === id)
         return item ? item.quantity : 0
     }
 
+    useEffect(() => {
+
+    }, [])
+
     return {
         items,
+        totalPrice,
         addToCart,
-        updateItemQuantity,
         removeItemFromCart,
+        increaseItemQuantity,
+        decreaseItemQuantity,
         getItemQuantity,
     }
 }
