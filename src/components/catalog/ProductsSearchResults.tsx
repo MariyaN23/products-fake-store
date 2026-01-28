@@ -2,6 +2,7 @@
 import {ProductCard} from "@/components/catalog/ProductCard";
 import {useProducts} from "@/hooks/useProducts";
 import {Spinner} from "@heroui/react";
+import { useCart } from "@/hooks/useCart";
 
 export const ProductsSearchResults = () => {
     const {
@@ -9,6 +10,12 @@ export const ProductsSearchResults = () => {
         status,
         error,
     } = useProducts()
+
+    const {
+        addToCart,
+        updateItemQuantity,
+        getItemQuantity
+    } = useCart()
 
     if (status === 'loading') {
         return (
@@ -31,6 +38,9 @@ export const ProductsSearchResults = () => {
                     <ProductCard
                         key={product.id}
                         product={product}
+                        addToCart={addToCart}
+                        updateItemQuantity={updateItemQuantity}
+                        getItemQuantity={getItemQuantity}
                     />
                 )) : (
                     <div className={'xl:col-span-4 flex flex-col items-center text-center'}>

@@ -2,19 +2,39 @@ import { Product } from "@/lib/types/Product";
 import { Button } from "@heroui/react";
 import Image from "next/image";
 import { formattedPrice } from "@/helpers/formattedPrice";
+import { CartItem } from "@/lib/types/CartItem";
 
 type Props = {
     product: Product
+    addToCart: (item: CartItem) => void
+    updateItemQuantity: (id: number, quantity: number) => void
+    getItemQuantity: (id: number) => number
 }
 
-export const ProductCard = ({product}: Props) => {
+export const ProductCard = ({
+                                product,
+                                addToCart,
+                                updateItemQuantity,
+                                getItemQuantity,
+                            }: Props) => {
     const displayedDescription = product.description.slice(0, 50)
+    const quantity = getItemQuantity(product.id)
+    const handleAddToCart = () => {
+        addToCart({
+            ...product,
+            quantity: 1
+        })
+    }
+
+    const handleIncrementCount = () => {
+        updateItemQuantity(product.id, quantity + 1)
+    }
+    const handleDecrementCount = () => {
+        updateItemQuantity(product.id, Math.max(0, quantity - 1))
+    }
 
     return (
-        <a
-            href={'/'}
-            className={'flex flex-col items-center gap-3 p-3 bg-gray-200 dark:bg-gray-900 rounded-xl'}
-        >
+        <div className={'flex flex-col items-center gap-3 p-3 bg-gray-200 dark:bg-gray-900 rounded-xl'}>
             <div className={'relative flex justify-center items-center w-48 h-48'}>
                 <Image
                     src={product.image}
@@ -41,13 +61,29 @@ export const ProductCard = ({product}: Props) => {
                     {displayedDescription}...
                 </p>
             </div>
-            <Button
-                fullWidth
-                size={'sm'} 
-                color={'primary'}
-            >
-                Add to cart
-            </Button>
-        </a>
+            <div className={'w-full flex items-center justify-between gap-2'}>
+                <Button
+                    fullWidth
+                    size={'sm'}
+                    color={'primary'}
+                    onPress={handleAddToCart}
+                >
+                    Add to cart
+                </Button>
+                {quantity > 0 && (
+                    <div className={'flex gap-2'}>
+                        <button onClick={handleDecrementCount}>
+                            -
+                        </button>
+                        <div>
+                            {quantity}
+                        </div>
+                        <button onClick={handleIncrementCount}>
+                            +
+                        </button>
+                    </div>
+                )}
+            </div>
+        </div>
     )
 }
