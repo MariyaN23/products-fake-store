@@ -2,7 +2,7 @@ import type {Product} from "../../lib/types/Product.ts";
 import type {Status} from "../../lib/types/Status.ts";
 import type {Sort} from "../../lib/types/Sort.ts";
 import {createSlice, type PayloadAction} from "@reduxjs/toolkit";
-import {fetchProducts} from "./productsActions.ts";
+import {fetchProductsAndCategories} from "./productsActions.ts";
 
 type InitialState = {
     items: Product[]
@@ -32,12 +32,6 @@ const initialState: InitialState = {
     categories: [],
     filterCategories: [],
     searchQuery: '',
-}
-
-const getUniqueCategories = (products: Product[]): string[] => {
-    const categoriesSet = new Set<string>()
-    products.forEach(product => categoriesSet.add(product.category))
-    return Array.from(categoriesSet).sort()
 }
 
 const applyAllFilters = (
@@ -115,19 +109,19 @@ export const slice = createSlice({
     },
     extraReducers: builder => {
         builder
-            .addCase(fetchProducts.pending, (state) => {
+            .addCase(fetchProductsAndCategories.pending, (state) => {
                 state.status = 'loading'
                 state.error = null
             })
-            .addCase(fetchProducts.fulfilled, (state, action) => {
+            .addCase(fetchProductsAndCategories.fulfilled, (state, action) => {
                 state.status = 'succeeded'
                 state.items = action.payload.products
                 state.filteredItems = action.payload.products
-                state.categories = getUniqueCategories(action.payload.products)
+                state.categories = action.payload.categories
                 state.filterCategories = []
                 state.pagination.currentPage = 1
             })
-            .addCase(fetchProducts.rejected, (state, action) => {
+            .addCase(fetchProductsAndCategories.rejected, (state, action) => {
                 state.status = 'failed'
                 state.error = action.payload as string
             })

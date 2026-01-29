@@ -5,4 +5,7 @@ export const productsApi = {
     getProducts() {
         return instance.get<Product[]>('products')
     },
+    getCategories() {
+        return instance.get<string[]>('products/categories')
+    },
 }

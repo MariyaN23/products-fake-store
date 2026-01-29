@@ -1,8 +1,8 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from "react";
+import {useDispatch, useSelector} from 'react-redux';
+import {useEffect} from "react";
 import type {AppDispatch} from "../lib/types/App.ts";
 import {productsSelectors} from "../features/products";
-import {fetchProducts} from "../features/products/productsActions.ts";
+import {fetchProductsAndCategories} from "../features/products/productsActions.ts";
 import {
     setCurrentPage,
     setSearchQuery,
@@ -24,7 +24,7 @@ export function useProducts() {
     const searchQuery = useSelector(productsSelectors.selectSearchQuery)
 
     useEffect(() => {
-        dispatch(fetchProducts())
+        dispatch(fetchProductsAndCategories())
     }, [dispatch])
 
     const onPageChange = (newPage: number) => {

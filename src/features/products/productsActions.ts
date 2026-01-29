@@ -1,12 +1,19 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {productsApi} from "../../lib/api/productsApi.ts";
 
-export const fetchProducts = createAsyncThunk('products/fetchProducts', async (_, {
+export const fetchProductsAndCategories = createAsyncThunk('products/fetchProductsAndCategories', async (_, {
     rejectWithValue
 }) => {
     try {
-        const response = await productsApi.getProducts()
-        return {products: response.data}
+        const [productsResponse, categoriesResponse] = await Promise.all([
+            productsApi.getProducts(),
+            productsApi.getCategories()
+        ])
+
+        return {
+            products: productsResponse.data,
+            categories: categoriesResponse.data
+        }
     } catch (error: unknown) {
         if (error instanceof Error) {
             const axiosError = error as { response?: { data?: { message?: string } } }
@@ -16,6 +23,6 @@ export const fetchProducts = createAsyncThunk('products/fetchProducts', async (_
                 'Some error occurred'
             )
         }
-        return rejectWithValue('Some error occurred while fetching products')
+        return rejectWithValue('Some error occurred while fetching data')
     }
 })
