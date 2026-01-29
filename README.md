@@ -1,6 +1,6 @@
-run project:
-npm install
+**run project:**\
+npm install\
 npm run dev
 
-tests:
+**tests:**\
 npm run test
