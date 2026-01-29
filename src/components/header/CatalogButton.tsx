@@ -7,6 +7,7 @@ export const CatalogButton = () => {
             as={Link}
             variant="light"
             href={paths.home}
+            className={'font-bold text-3xl'}
         >
             Catalog
         </Button>
