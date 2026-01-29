@@ -1,4 +1,4 @@
-import {Button} from "@heroui/react";
+import {addToast, Button} from "@heroui/react";
 import type {Product} from "../../lib/types/Product.ts";
 import {useCart} from "../../hooks/useCart.tsx";
 import {formattedPrice} from "../../helpers/formattedPrice.ts";
@@ -22,6 +22,11 @@ export const ProductCard = ({product}: Props) => {
         addToCart({
             ...product,
             quantity: 1,
+        })
+        addToast({
+            title: "Added to cart",
+            color: 'success',
+            timeout: 1000,
         })
     }
 

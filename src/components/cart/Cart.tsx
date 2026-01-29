@@ -22,14 +22,14 @@ export const Cart = () => {
                     </div>
                 )}
             </div>
-            <div>
-                <p className={'font-bold text-lg'}>
-                    Total price:
-                </p>
-                <span>
-                    {formattedPrice(totalPrice)} $
-                </span>
-            </div>
+            {items.length > 0 && (
+                <div>
+                    <p className={'font-bold text-lg'}>
+                        Total price:
+                    </p>
+                    <span>{formattedPrice(totalPrice)} $</span>
+                </div>
+            )}
         </div>
     )
 }

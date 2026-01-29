@@ -1,4 +1,4 @@
-import {HeroUIProvider} from "@heroui/react";
+import {HeroUIProvider, ToastProvider} from "@heroui/react";
 import type {ReactNode} from "react";
 import {Provider} from "react-redux";
 import {store} from "./store";
@@ -10,6 +10,7 @@ export function Providers({children}: { children: ReactNode }) {
         <Provider store={store}>
             <BrowserRouter>
                 <HeroUIProvider>
+                    <ToastProvider placement={'bottom-left'}/>
                     <DarkThemeProvider>
                         {children}
                     </DarkThemeProvider>
