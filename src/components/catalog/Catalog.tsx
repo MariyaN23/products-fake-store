@@ -1,8 +1,8 @@
-import { ProductsSearchResults } from "@/components/catalog/ProductsSearchResults";
-import { SearchPagination } from "@/components/catalog/SearchPagination";
-import { SortSelect } from "./SortSelect";
-import { Filters } from "@/components/catalog/Filters";
-import { ProductsSearch } from "@/components/catalog/ProductsSearch";
+import {ProductsSearch} from "./ProductsSearch.tsx";
+import {SortSelect} from "./SortSelect.tsx";
+import {Filters} from "./Filters.tsx";
+import {ProductsSearchResults} from "./ProductsSearchResults.tsx";
+import {SearchPagination} from "./SearchPagination.tsx";
 
 export const Catalog = () => {
     return (

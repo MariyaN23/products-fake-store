@@ -1,6 +1,5 @@
-"use client"
-import {ProductCard} from "@/components/catalog/ProductCard";
-import {useProducts} from "@/hooks/useProducts";
+import {ProductCard} from "./ProductCard.tsx";
+import {useProducts} from "../../hooks/useProducts.tsx";
 import {Spinner} from "@heroui/react";
 
 export const ProductsSearchResults = () => {

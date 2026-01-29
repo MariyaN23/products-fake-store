@@ -1,5 +1,5 @@
-import { AppRootState } from "@/lib/types/App";
-import { createSelector } from "reselect";
+import {createSelector} from "reselect";
+import type {AppRootState} from "../../lib/types/App.ts";
 
 const selectFilteredItems = (state: AppRootState) => state.products.filteredItems
 const selectItemsPerPage = (state: AppRootState) => state.products.pagination.itemsPerPage

@@ -1,9 +1,8 @@
-import {Product} from "@/lib/types/Product";
 import {Button} from "@heroui/react";
-import Image from "next/image";
-import {formattedPrice} from "@/helpers/formattedPrice";
-import {IncreaseDecreaseButtons} from "@/components/ui/IncreaseDecreaseButtons";
-import {useCart} from "@/hooks/useCart";
+import type {Product} from "../../lib/types/Product.ts";
+import {useCart} from "../../hooks/useCart.tsx";
+import {formattedPrice} from "../../helpers/formattedPrice.ts";
+import {IncreaseDecreaseButtons} from "../ui/IncreaseDecreaseButtons.tsx";
 
 type Props = {
     product: Product
@@ -36,12 +35,11 @@ export const ProductCard = ({product}: Props) => {
     return (
         <div className={'flex flex-col items-center gap-3 p-3 bg-gray-200 dark:bg-gray-900 rounded-xl'}>
             <div className={'relative flex justify-center items-center w-48 h-48'}>
-                <Image
+                <img
                     src={product.image}
                     alt={product.title}
                     width={115}
                     height={115}
-                    loading={'eager'}
                     className={'w-full h-full object-contain'}
                 />
                 <div className={'absolute bottom-1 left-1'}>

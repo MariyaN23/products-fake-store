@@ -1,6 +1,5 @@
-"use client"
+import {useProducts} from "../../hooks/useProducts.tsx";
 import {Pagination} from "@heroui/react";
-import {useProducts} from "@/hooks/useProducts";
 
 export const SearchPagination = () => {
     const {

@@ -1,5 +1,5 @@
-import { Product } from "@/lib/types/Product";
-import { instance } from "@/lib/api/index";
+import {instance} from "./index.ts";
+import type {Product} from "../types/Product.ts";
 
 export const productsApi = {
     getProducts() {

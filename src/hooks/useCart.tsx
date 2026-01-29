@@ -1,10 +1,8 @@
-"use client"
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "@/lib/types/App";
-import { cartSelectors } from "@/features/cart";
-import {addItem, decreaseQuantity, increaseQuantity, removeItem} from "@/features/cart/cartReducer";
-import { CartItem } from "@/lib/types/CartItem";
-import {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import type {AppDispatch} from "../lib/types/App.ts";
+import {cartSelectors} from "../features/cart";
+import type {CartItem} from "../lib/types/CartItem.ts";
+import {addItem, decreaseQuantity, increaseQuantity, removeItem} from "../features/cart/cartReducer.ts";
 
 export function useCart() {
     const dispatch = useDispatch<AppDispatch>()
@@ -31,10 +29,6 @@ export function useCart() {
         const item = items.find(item => item.id === id)
         return item ? item.quantity : 0
     }
-
-    useEffect(() => {
-
-    }, [])
 
     return {
         items,

@@ -1,16 +1,15 @@
-"use client"
 import { useDispatch, useSelector } from 'react-redux';
-import { productsSelectors } from "@/features/products";
-import { AppDispatch } from "@/lib/types/App";
-import { fetchProducts } from "@/features/products/productsActions";
 import { useEffect } from "react";
+import type {AppDispatch} from "../lib/types/App.ts";
+import {productsSelectors} from "../features/products";
+import {fetchProducts} from "../features/products/productsActions.ts";
 import {
     setCurrentPage,
     setSearchQuery,
     setSelectedCategories,
     setSortingValue
-} from "@/features/products/productsReducer";
-import { Sort } from "@/lib/types/Sort";
+} from "../features/products/productsReducer.ts";
+import type {Sort} from "../lib/types/Sort.ts";
 
 export function useProducts() {
     const dispatch = useDispatch<AppDispatch>()

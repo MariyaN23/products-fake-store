@@ -1,6 +1,5 @@
-"use client"
+import {useProducts} from "../../hooks/useProducts.tsx";
 import {Accordion, AccordionItem, Button, Checkbox, CheckboxGroup} from "@heroui/react";
-import {useProducts} from "@/hooks/useProducts";
 
 export const Filters = () => {
     const {

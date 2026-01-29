@@ -1,9 +1,8 @@
-"use client"
-import { Input } from "@heroui/input";
-import { SearchIcon } from "@heroui/shared-icons";
-import { useProducts } from "@/hooks/useProducts";
-import { useEffect, useState } from "react";
-import { useDebounce } from "@/hooks/useDebounce";
+import {useProducts} from "../../hooks/useProducts.tsx";
+import {useEffect, useState} from "react";
+import {useDebounce} from "../../hooks/useDebounce.ts";
+import {Input} from "@heroui/react";
+import {SearchIcon} from "../ui/icons/SearchIcon.tsx";
 
 export const ProductsSearch = () => {
     const {

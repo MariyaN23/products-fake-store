@@ -1,7 +1,6 @@
-"use client"
-import { useCart } from "@/hooks/useCart";
-import {Item} from "@/components/cart/Item";
-import {formattedPrice} from "@/helpers/formattedPrice";
+import {useCart} from "../../hooks/useCart.tsx";
+import {Item} from "./Item.tsx";
+import {formattedPrice} from "../../helpers/formattedPrice.ts";
 
 export const Cart = () => {
     const {

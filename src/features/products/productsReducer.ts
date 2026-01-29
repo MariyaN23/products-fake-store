@@ -1,8 +1,8 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Product } from "@/lib/types/Product";
-import { Status } from "@/lib/types/Status";
-import { fetchProducts } from "@/features/products/productsActions";
-import { Sort } from "@/lib/types/Sort";
+import type {Product} from "../../lib/types/Product.ts";
+import type {Status} from "../../lib/types/Status.ts";
+import type {Sort} from "../../lib/types/Sort.ts";
+import {createSlice, type PayloadAction} from "@reduxjs/toolkit";
+import {fetchProducts} from "./productsActions.ts";
 
 type InitialState = {
     items: Product[]

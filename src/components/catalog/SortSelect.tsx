@@ -1,8 +1,7 @@
-"use client"
-import { Select, SelectItem } from "@heroui/react";
-import { ChangeEvent } from "react";
-import { Sort } from "@/lib/types/Sort";
-import {useProducts} from "@/hooks/useProducts";
+import {useProducts} from "../../hooks/useProducts.tsx";
+import type {ChangeEvent} from "react";
+import type {Sort} from "../../lib/types/Sort.ts";
+import {Select, SelectItem} from "@heroui/react";
 
 const sortingVariants = [
     {key: 'default', label: 'Featured'},

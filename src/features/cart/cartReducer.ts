@@ -1,5 +1,5 @@
-import {CartItem} from "@/lib/types/CartItem";
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import type {CartItem} from "../../lib/types/CartItem.ts";
+import {createSlice, type PayloadAction} from "@reduxjs/toolkit";
 
 type InitialState = {
     items: CartItem[]

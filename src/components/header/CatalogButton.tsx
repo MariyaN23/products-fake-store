@@ -1,6 +1,5 @@
-"use client"
-import { Button, Link } from "@heroui/react";
-import { paths } from "@/app/paths";
+import {Button, Link} from "@heroui/react";
+import {paths} from "../../app/paths.ts";
 
 export const CatalogButton = () => {
     return (

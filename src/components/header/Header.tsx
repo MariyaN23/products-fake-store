@@ -1,10 +1,10 @@
-import { ThemeSwitcher } from "@/components/ui/ThemeSwitcher";
-import { CartButton } from "@/components/header/CartButton";
-import { CatalogButton } from "@/components/header/CatalogButton";
+import {ThemeSwitcher} from "../ui/ThemeSwitcher.tsx";
+import {CatalogButton} from "./CatalogButton.tsx";
+import {CartButton} from "./CartButton.tsx";
 
 export const Header = () => {
     return (
-        <div className={'max-w-7xl mx-auto p-4'}>
+        <div className={'max-w-7xl mx-auto py-4'}>
             <div className={'flex items-center justify-between'}>
                 <ThemeSwitcher />
                 <CatalogButton />

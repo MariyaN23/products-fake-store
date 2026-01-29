@@ -1,23 +1,17 @@
-"use client"
-import { HeroUIProvider } from "@heroui/react";
-import { ThemeProvider as NextThemesProvider } from "next-themes";
-import { Provider } from "react-redux";
-import { store } from "@/app/store";
-import { ReactNode } from "react";
+import {HeroUIProvider} from "@heroui/react";
+import type {ReactNode} from "react";
+import {Provider} from "react-redux";
+import {store} from "./store";
+import {BrowserRouter} from "react-router";
 
 export function Providers({children}: { children: ReactNode }) {
     return (
         <Provider store={store}>
-            <HeroUIProvider>
-                <NextThemesProvider
-                    attribute="class"
-                    defaultTheme="system"
-                    enableSystem
-                    disableTransitionOnChange
-                >
+            <BrowserRouter>
+                <HeroUIProvider>
                     {children}
-                </NextThemesProvider>
-            </HeroUIProvider>
+                </HeroUIProvider>
+            </BrowserRouter>
         </Provider>
     )
 }

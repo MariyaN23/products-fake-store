@@ -1,8 +1,7 @@
-"use client"
+import {useCart} from "../../hooks/useCart.tsx";
 import {Badge, Button, Link} from "@heroui/react";
-import {CartIcon} from "@/components/ui/icons/CartIcon";
-import {paths} from "@/app/paths";
-import {useCart} from "@/hooks/useCart";
+import {paths} from "../../app/paths.ts";
+import {CartIcon} from "../ui/icons/CartIcon.tsx";
 
 export const CartButton = () => {
     const {

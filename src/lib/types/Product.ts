@@ -1,4 +1,4 @@
-import {ProductRating} from "@/lib/types/ProductRating";
+import type {ProductRating} from "./ProductRating.ts";
 
 export interface Product {
     id: number
