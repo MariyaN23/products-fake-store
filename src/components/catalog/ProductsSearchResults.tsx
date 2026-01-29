@@ -1,6 +1,6 @@
 import {ProductCard} from "./ProductCard.tsx";
 import {useProducts} from "../../hooks/useProducts.tsx";
-import {Spinner} from "@heroui/react";
+import {Skeleton} from "@heroui/react";
 
 export const ProductsSearchResults = () => {
     const {
@@ -11,7 +11,11 @@ export const ProductsSearchResults = () => {
 
     if (status === 'loading') {
         return (
-            <Spinner/>
+            <div className={'grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'}>
+                {[...Array(12)].map((_, index) => (
+                    <Skeleton className="rounded-lg h-96" key={index}/>
+                ))}
+            </div>
         )
     }
 

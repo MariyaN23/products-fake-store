@@ -1,5 +1,5 @@
 import {useProducts} from "../../hooks/useProducts.tsx";
-import {Accordion, AccordionItem, Button, Checkbox, CheckboxGroup} from "@heroui/react";
+import {Accordion, AccordionItem, Button, Checkbox, CheckboxGroup, Skeleton} from "@heroui/react";
 
 export const Filters = () => {
     const {
@@ -9,6 +9,12 @@ export const Filters = () => {
         onCategoriesChange,
         onClearCategories,
     } = useProducts()
+
+    if (status === 'loading') {
+        return (
+            <Skeleton className="rounded-lg h-60"/>
+        )
+    }
 
     if (status === 'succeeded') {
         return (
