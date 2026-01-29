@@ -1,18 +1,20 @@
 import {Button} from "@heroui/react";
 import {MoonIcon} from "./icons/MoonIcon";
 import {SunIcon} from "./icons/SunIcon";
+import {useContext} from "react";
+import {DarkThemeContext} from "../../context/DarkThemeContext.tsx";
 
 export function ThemeSwitcher() {
-    const theme = 'dark'
+    const { darkTheme, toggleDarkTheme } = useContext(DarkThemeContext)
 
     return (
         <Button
             isIconOnly
             variant="flat"
-            //onPress={toggleTheme}
+            onPress={toggleDarkTheme}
             aria-label="Toggle theme"
         >
-            {theme === "dark" ? <SunIcon /> : <MoonIcon />}
+            {darkTheme ? <SunIcon /> : <MoonIcon />}
         </Button>
     )
 }
