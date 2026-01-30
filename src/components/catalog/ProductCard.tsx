@@ -1,4 +1,4 @@
-import {addToast, Button, Tooltip} from "@heroui/react";
+import {addToast, Button} from "@heroui/react";
 import type {Product} from "../../lib/types/Product.ts";
 import {useCart} from "../../hooks/useCart.tsx";
 import {formattedPrice} from "../../helpers/formattedPrice.ts";
@@ -53,21 +53,16 @@ export const ProductCard = ({product}: Props) => {
                     </div>
                 </div>
             </div>
-            <div className={'flex-1'}>
+            <div className={'flex-1 w-full'}>
                 <div className={'font-bold text-sm'}>
                     {formattedPrice(product.price)} $
                 </div>
                 <p className={'hyphens-auto'}>
                     {product.title}
                 </p>
-                <Tooltip
-                    content={product.description}
-                    className={'max-w-40'}
-                >
-                    <p className={'text-gray-600 text-xs'}>
-                        {displayedDescription}...
-                    </p>
-                </Tooltip>
+                <p className={'text-gray-600 text-xs'}>
+                    {displayedDescription}...
+                </p>
             </div>
             <div className={'w-full flex items-center justify-between gap-2'}>
                 <Button
