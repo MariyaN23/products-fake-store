@@ -7,7 +7,7 @@ import {SearchPagination} from "./SearchPagination.tsx";
 export const Catalog = () => {
     return (
         <div className={'space-y-4'}>
-            <div className={'flex gap-4 items-start justify-between'}>
+            <div className={'flex flex-col md:flex-row gap-4 items-start justify-between'}>
                 <ProductsSearch />
                 <SortSelect />
             </div>

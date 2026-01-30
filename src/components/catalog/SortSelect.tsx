@@ -23,7 +23,7 @@ export const SortSelect = () => {
 
     return (
         <Select
-            className={'max-w-64'}
+            className={'md:max-w-60'}
             aria-label={'Products sorting'}
             selectedKeys={[sorting]}
             onChange={handleSelectionChange}
